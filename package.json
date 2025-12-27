@@ -2,7 +2,8 @@
   "dependencies": {
     "@types/websocket": "^1.0.10",
     "typescript": "^5.9.3",
-    "websocket": "^1.0.35"
+    "websocket": "^1.0.35",
+    "zod": "^4.2.1"
   },
   "name": "codealong",
   "version": "1.0.0",

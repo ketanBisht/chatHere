@@ -1,5 +1,6 @@
 import {server as WebSocketServer} from "websocket" ;
 import http from 'http';
+import type { initMessagetype, supportedMessages, upvoteMessagetype, userMessagetype } from "../messages.js";
 
 var server = http.createServer(function(request : any, response : any) {
     console.log((new Date()) + ' Received request for ' + request.url);
@@ -37,8 +38,13 @@ wsServer.on('request', function(request) {
     console.log((new Date()) + ' Connection accepted.');
     connection.on('message', function(message) {
         if (message.type === 'utf8') {
-            console.log('Received Message: ' + message.utf8Data);
-            connection.sendUTF(message.utf8Data);
+            try{
+                messageHandler(JSON.parse(message.utf8Data));
+            }catch(e){
+
+            }
+            // console.log('Received Message: ' + message.utf8Data);
+            // connection.sendUTF(message.utf8Data);
         }
         else if (message.type === 'binary') {
             console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
@@ -49,3 +55,7 @@ wsServer.on('request', function(request) {
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     });
 });
+
+function messageHandler(type : supportedMessages , message : initMessagetype | userMessagetype | upvoteMessagetype){
+    
+}

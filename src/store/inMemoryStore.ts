@@ -48,4 +48,4 @@ export  class inMemoryStore implements store {
             chat.upvotes.push(userID);
          }
     }
-}
+} 
