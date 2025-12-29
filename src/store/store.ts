@@ -1,32 +1,32 @@
-import type { NumericLiteral } from "typescript";
 
-type userID = string ; 
+export type UserId = string;
 
-export interface chat{
-    id : string ;
-    userID : userID ;
-    name : string ;
-    message : string ; 
-    upvotes : userID[];
+export interface Chat {
+    id: string;
+    userId: UserId;
+    name: string;
+    message: string;
+    upvotes: UserId[]; // who has upvoited what 
 }
 
-export abstract class store {
+export abstract class Store {
     constructor() {
-        
-    }
-    initRoom(roomID : string){
 
     }
-
-    getChats( room : string , limit : number , offset: number){
+    initRoom(roomId: string) {
 
     }
 
-    addChat(userID : userID , name : string,  roomID : string, message : string){
-        
-    }
-
-    upvotes(userID : userID , roomID : string , chatID : string){
+    getChats(room: string, limit: number, offset: number) {
 
     }
+
+    addChat(userId: UserId, name: string, room: string, message: string) {
+
+    }
+
+    upvote(userId: UserId, room: string, chatId: string) {
+
+    }
+
 }
