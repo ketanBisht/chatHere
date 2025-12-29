@@ -1,12 +1,19 @@
-import {server as WebSocketServer} from "websocket" ;
+import {connection, server as WebSocketServer} from "websocket" ;
 import http from 'http';
-import type { initMessagetype, supportedMessages, upvoteMessagetype, userMessagetype } from "../messages.js";
+import { supportedMessages, type incomingMessages } from "./messages/incomingmessages.js";
+import { userManager } from "./usermanager.js";
+import { inMemoryStore } from "./store/inMemoryStore.js";
 
-var server = http.createServer(function(request : any, response : any) {
+
+const server = http.createServer(function(request : any, response : any) {
     console.log((new Date()) + ' Received request for ' + request.url);
     response.writeHead(404);
     response.end();
 });
+
+const usermanager = new userManager(); 
+const store = new inMemoryStore();
+
 server.listen(8080, function() {
     console.log((new Date()) + ' Server is listening on port 8080');
 });
@@ -39,7 +46,7 @@ wsServer.on('request', function(request) {
     connection.on('message', function(message) {
         if (message.type === 'utf8') {
             try{
-                messageHandler(JSON.parse(message.utf8Data));
+                messageHandler(connection , JSON.parse(message.utf8Data));
             }catch(e){
 
             }
@@ -56,6 +63,10 @@ wsServer.on('request', function(request) {
     });
 });
 
-function messageHandler(type : supportedMessages , message : initMessagetype | userMessagetype | upvoteMessagetype){
-    
+function messageHandler(ws : connection , message: incomingMessages){
+    if(message.type == supportedMessages.joinROOM){
+        const payload = message.payload ;
+
+    }
+
 }

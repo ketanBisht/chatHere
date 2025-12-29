@@ -1,3 +1,5 @@
+import type { connection } from "websocket";
+
 interface user {
     name : string ; 
     id : string ;
@@ -5,6 +7,7 @@ interface user {
 
 interface Room{
     users: user[]
+    conn: connection ; 
 }
 
 export class userManager{
@@ -14,10 +17,11 @@ export class userManager{
         this.rooms = new Map<string,Room>()
     }
 
-    addUser(name: string , userID : string , roomID : string , socket : WebSocket){
+    addUser(name: string , userID : string , roomID : string , socket : connection){
         if(this.rooms.get(roomID)){
             this.rooms.set(roomID,{
-                users: []
+                users: [], 
+                conn : socket 
             });
         }
 
@@ -32,4 +36,10 @@ export class userManager{
             users.filter(({id})=> id!== userID);
          }
     }
+    getUser(roomID : string , userID : string ) :user|null {
+        const user = this.rooms.get(roomID)?.users.find((({id})=> id === userID)); 
+        return user ??  null ; 
+    }
+
+    
 }
